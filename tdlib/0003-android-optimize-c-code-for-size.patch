@@ -1,0 +1,27 @@
+diff --git a/example/android/CMakeLists.txt b/example/android/CMakeLists.txt
+--- a/example/android/CMakeLists.txt
++++ b/example/android/CMakeLists.txt
+@@ -1,6 +1,6 @@
+ cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+ 
+-project(TdAndroid VERSION 1.0 LANGUAGES CXX)
++project(TdAndroid VERSION 1.0 LANGUAGES CXX C)
+ 
+ set(TD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../..)
+ 
+@@ -9,6 +9,7 @@ option(TD_ANDROID_JSON_JAVA "Use \"ON\" to build Java wrapper for JSON API.")
+ 
+ if (TD_ANDROID_JSON)
+   if (CMAKE_CROSSCOMPILING)
++    string(APPEND CMAKE_C_FLAGS_RELWITHDEBINFO " -flto=thin -Oz")
+     string(APPEND CMAKE_CXX_FLAGS_RELWITHDEBINFO " -flto=thin -Oz")
+     list(APPEND CMAKE_FIND_ROOT_PATH "${OPENSSL_ROOT_DIR}")
+   endif()
+@@ -25,6 +26,7 @@ if (CMAKE_CROSSCOMPILING)
+ 
+   include(TdSetUpCompiler)
+   td_set_up_compiler()
++  string(APPEND CMAKE_C_FLAGS_RELWITHDEBINFO " -flto=thin -Oz")
+   string(APPEND CMAKE_CXX_FLAGS_RELWITHDEBINFO " -flto=thin -Oz")
+ 
+   list(APPEND CMAKE_FIND_ROOT_PATH "${OPENSSL_ROOT_DIR}")

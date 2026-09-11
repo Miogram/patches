@@ -1,0 +1,23 @@
+diff --git a/example/android/CMakeLists.txt b/example/android/CMakeLists.txt
+--- a/example/android/CMakeLists.txt
++++ b/example/android/CMakeLists.txt
+@@ -13,6 +13,9 @@ if (TD_ANDROID_JSON)
+     list(APPEND CMAKE_FIND_ROOT_PATH "${OPENSSL_ROOT_DIR}")
+   endif()
+   add_subdirectory(${TD_DIR} td)
++  if (CMAKE_CROSSCOMPILING AND CMAKE_SYSTEM_VERSION VERSION_GREATER_EQUAL "23")
++    set_property(TARGET tdjson APPEND_STRING PROPERTY LINK_FLAGS " -Wl,--pack-dyn-relocs=android")
++  endif()
+   return()
+ endif()
+ 
+@@ -31,6 +34,9 @@ if (CMAKE_CROSSCOMPILING)
+   add_subdirectory(${TD_DIR} td)
+ 
+   add_library(tdjni SHARED "${TD_DIR}/example/java/td_jni.cpp")
++  if (CMAKE_SYSTEM_VERSION VERSION_GREATER_EQUAL "23")
++    set_property(TARGET tdjni APPEND_STRING PROPERTY LINK_FLAGS " -Wl,--pack-dyn-relocs=android")
++  endif()
+ 
+   if (TD_ANDROID_JSON_JAVA)
+     target_link_libraries(tdjni PRIVATE Td::TdJsonStatic)
