@@ -1,0 +1,10 @@
+diff --git a/example/android/build-tdlib.sh b/example/android/build-tdlib.sh
+--- a/example/android/build-tdlib.sh
++++ b/example/android/build-tdlib.sh
+@@ -135,4 +135,6 @@ rm tdlib/libs/*/*.debug || exit 1
+ jar -cMf tdlib.zip tdlib || exit 1
+ mv tdlib.zip tdlib-debug.zip tdlib || exit 1
+ 
++rm -rf build-native-$TDLIB_INTERFACE || exit 1
++
+ echo "Done."
